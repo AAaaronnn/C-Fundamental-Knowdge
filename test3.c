@@ -1,46 +1,46 @@
 //-----------------------------------------------------------------------//
 
-//结构体可以让c语言创建新的类型出来
+//缁撴瀯浣撳彲浠ヨc璇█鍒涘缓鏂扮殑绫诲瀷鍑烘潵
 #include <stdio.h>
 // struct Stu
 // {
-//     char name[20]; //成员变量
+//     char name[20]; //鎴愬憳鍙橀�?
 //     int age;
 //     double score;
 // };
 // int main()
 // {
-//     struct Stu s = {"张三" , 20 , 85.6}; //结构体的创建与初始化
-//     printf("1: %s %d %lf\n" , s.name , s.age , s.score); // %lf打印双精度浮点型
+//     struct Stu s = {"寮犱�?" , 20 , 85.6}; //缁撴瀯浣撶殑鍒涘缓涓庡垵濮嬪�?
+//     printf("1: %s %d %lf\n" , s.name , s.age , s.score); // %lf鎵撳嵃鍙岀簿搴︽诞鐐瑰�?
 //     struct Stu *ps = &s;
 //     printf("2: %s %d %1f\n" , (*ps).name , (*ps).age , (*ps).score);
-//     printf("3: %s %d %1f\n" , ps->name , ps->age , ps->score); //结构体指针 -> 成员变量名
+//     printf("3: %s %d %1f\n" , ps->name , ps->age , ps->score); //缁撴瀯浣撴寚閽� -> 鎴愬憳鍙橀噺鍚�?
 //     return 0;
 // }
 
 //-----------------------------------------------------------------------//
 
-// c语言是结构化的程序设计语言 : 顺序结构 、 选择结构 、 循环结构 
+// c璇█鏄粨鏋勫寲鐨勭▼搴忚璁¤瑷�? : 椤哄簭缁撴�? 銆� 閫夋嫨缁撴�? 銆� 寰幆缁撴�? 
 
-// 分支 : 1.if 2.switch
-// 循环 : 1.while 2.for 3.do while
-// c语言表达真假 : 非0就是真 0就是假
+// 鍒嗘�? : 1.if 2.switch
+// 寰�? : 1.while 2.for 3.do while
+// c璇█琛ㄨ揪鐪熷�? : 闈�0灏辨槸鐪�? 0灏辨槸鍋�?
 
-//                                                                           if 分支语句
-// 易错-------打印hehe
+//                                                                           if 鍒嗘敮璇彞
+// 鏄撻�?-------鎵撳嵃hehe
 // int main()
 // {
 //     int a = 0;
 //     int b = 2;
 //     if ( a == 1 )
-//       if ( b == 2) // 与else对应 : else与最近的if匹配
+//       if ( b == 2) // 涓巈lse瀵瑰�? : else涓庢渶杩戠殑if鍖归�?
 //         printf("hehe\n");
 //       else 
 //         printf("haha\n");
 //     return 0;
 // }
 
-// 易错-------打印hehe
+// 鏄撻�?-------鎵撳嵃hehe
 // int main()
 // {
 //     int num = 3;
@@ -49,7 +49,7 @@
 //     return 0;
 // }
 
-// 修改如下
+// 淇敼濡備笅
 // int main()
 // {
 //     int num = 3;
@@ -58,9 +58,9 @@
 //     return 0;
 // }
 
-//                                                                           switch 分支语句
+//                                                                           switch 鍒嗘敮璇彞
 // (2)
-// case是入口 ， break是出口
+// case鏄叆鍙�? 锛� break鏄嚭鍙�?
 // int main()
 // {
 //     int day = 0;
@@ -68,35 +68,35 @@
 //     switch (day)
 //     {
 //         case 1:
-//         printf("星期一\n");
+//         printf("鏄熸湡涓€\n");
 //         break;
 //         case 2:
-//         printf("星期二\n");
+//         printf("鏄熸湡浜孿n");
 //         break;
 //         case 3:
-//         printf("星期三\n");
+//         printf("鏄熸湡涓塡n");
 //         break;
 //         case 4:
-//         printf("星期四\n");
+//         printf("鏄熸湡鍥沑n");
 //         break;
 //         case 5:
-//         printf("星期五\n");
+//         printf("鏄熸湡浜擻n");
 //         break;
 //         case 6:
-//         printf("星期六\n");
+//         printf("鏄熸湡鍏璡n");
 //         break;
 //         case 7:
-//         printf("星期天\n");
+//         printf("鏄熸湡澶‐n");
 //         break;
 //     default:
-//         printf("输入错误\n");
+//         printf("杈撳叆閿欒\n");
 //         break;
 //     }
 //     return 0;
 // }
 
 
-//                                                                           while 循环语句
+//                                                                           while 寰幆璇彞
 // (1)
 // int main()
 // {
@@ -112,16 +112,37 @@
 // }
 
 // (2)
+// int main()
+// {
+//     int ch = 0;
+//     // ctrl+z -- getchar()灏辫鍙栫粨鏉�
+
+//     while ((ch = getchar()) != EOF) // getchar()鑾峰彇鐢ㄦ埛鍦ㄧ粓绔緭鍏ョ殑瀛楃锛屼笖姣忔鍙兘璇诲彇涓€涓瓧绗︼紝閬囧埌\n鍚庤嚜鍔ㄧ粨鏉熻繘绋�?  EOF : End Of File 甯稿父鐢ㄤ簬鍒ゆ柇鏄惁鍒拌揪浜嗘枃浠舵湯灏炬垨杈撳叆娴佹湯灏�
+//     {
+//         putchar(ch); // putchar()鎵撳嵃鎷彿閲岄潰鐨勫瓧绗�?
+//     }
+//     // 鏁翠釜绋嬪簭涓� 锛屽亣璁剧敤鎴疯緭鍏�? , 鐩稿綋浜庤緭鍏� A\n , getchar()
+//     return 0;
+
+// }
+
+// (3)  闅� -> 鍦╟璇█涓湁缂撳啿鍖�? , scanf鐩存帴鍙栬蛋缂撳啿鍖轰腑杈撳叆鐨勫唴瀹圭暀涓媆n , getchar()鍙堜細鍦ㄧ紦鍐插尯涓彇鍐呭�? , 姝ゆ椂灏卞彧鏈塡n浜�
 int main()
 {
-    int ch = 0;
-    // ctrl+z -- getchar()就读取结束
-
-    while ((ch = getchar()) != EOF) // getchar()获取用户在终端输入的字符，且每次只能读取一个字符，遇到\n后自动结束进程  EOF : End Of File 常常用于判断是否到达了文件末尾或输入流末尾
+    char password[20] = { 0 };
+    printf("璇疯緭鍏ュ瘑鐮侊�?");
+    scanf("%d" , password);
+    printf("璇风‘璁ゅ瘑鐮�(Y/N)");
+    char ch = getchar();
+    if (ch == 'Y')
     {
-        putchar(ch); // putchar()打印括号里面的字符
+        printf("纭鎴愬姛\n");
     }
-    // 整个程序中 ，假设用户输入A , 相当于输入 A\n , getchar()
+    else
+    {
+        printf("纭澶辫触\n");
+    }
     return 0;
+} 
 
-}
+//����
