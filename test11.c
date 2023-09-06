@@ -1,139 +1,266 @@
 #include <stdio.h>
-// 指针进阶
-//-----------------------------------------------------------------------//
+#include <stdlib.h>
+//----------------------------------------------------//
 
-// 字符指针 -> 指向整型的指针 -> char* p
+// 高级宏定义
 
-// demo(1) -> 示例
-// int mian()
+// demo(1) -> 不带参数的宏定义 - 可以用 #undef 来终止宏定义的作用域 - 宏也支持嵌套
+// #define PI 3.14
+// #define R 6371
+// #define V PI * R * R * 4 / 3
+// int main()
 // {
-//     char ch = 'q';
-//     char* pc = &ch;
+//     int r;
+//     float s;
+//     printf("请输入圆的半径:");
+//     scanf("%d", &r);
 
-//     // 本质是把 "hello world" 的首字符的地址存储到ps中
-//     char* ps = "hello world";
-//     char arr[] = "hello world"; // 数组的本质也是存储的其首字符地址
-//     printf("%c\n", *ps);
+//     s = PI * r * r ;
+//     printf("圆的面积是: %.2f\n", s);
+
+//     printf("地球的体积大概是:%.2f\n ", V);
+
 //     return 0;
 // }
 
-// demo(2) -> ‘字符串是常量’
+// demo(2) -> 带参数的宏定义 
+// #define MAX(x,y) (((x) > (y)) ? (x) : (y))
 // int main()
 // {
-//     // 对于数组来说 -> 字符串是变量字符串 -> 即在内存中指的地址是不一样的
-//     char str1[] = "hello world";
-//     char str2[] = "hello world";
-//     // 对于指针来说 -> 字符串是常量字符串 -> 即只要字符串内容一样，在内存中指的地址就是一样的
-//     char* str3 = "hello world";
-//     char* str4 = "hello world";
+//     int x ,y;
+//     printf("请输入两个整数：");
+//     scanf("%d%d", &x, &y);
+//     printf("较大数为:%d\n", MAX(x,y));
+//     return 0;
+// }
 
-//     if (str1 == str2)
-//         printf("str1 and str2 are the same\n");
+// 宏定义中鲜为人知的操作
+
+// # 和 ## -> 两个预处理运算符
+// demo(3) -> #
+// #define STR(s) # s // 第二个警号会将 s 转换成字符串形式
+// int main()
+// {
+//     printf("%s\n", STR(hello));
+//     return 0;
+// }
+// demo(4) -> ##
+// #define TOGETHER(x,y) x ## y // ##可将两个参数连接起来
+// int main()
+// {
+//     printf("%d\n", TOGETHER(5, 20));
+//     return 0;
+// }
+
+//----------------------------------------------------//
+
+// 结构体
+
+// demo(5) -> 结构体声明、访问
+// struct Book
+// {
+//     char title[128];
+//     char author[40];
+// }book;
+// int main()
+// {
+//     printf("请输入书名：");
+//     scanf("%s",book.title);
+//     printf("请输入作者：");
+//     scanf("%s",book.author);
+//     return 0;
+// }
+
+// 结构体指针 符号: ->
+// demo(6)
+// struct Book
+// {
+//     char title[128];
+//     char author[40];
+// }book = {
+//     "《小鱼》",
+//     "小甲鱼"
+// };
+// int main()
+// {
+//     struct Book *pt;
+//     pt = &book;
+//     printf("书名：%s\n", pt->title);
+//     printf("作者：%s\n", pt->author);
+//     printf("书名：%s\n", book.title);
+//     printf("作者：%s\n", book.author);
+//     return 0;
+// }
+
+// 结构体指针 + 内存分配
+// demo(7)
+// struct Date
+// {
+//     int year;
+//     int month;
+// };
+// int main()
+// {
+//     struct Date *date;
+//     date = (struct Date *)malloc(sizeof(struct Date));
+//     if (date == NULL)
+//     {
+//         printf("内存分配失败\n");
+//         exit(1);
+//     }
+
+//     date->year = 2023;
+//     date->month = 9;
+//     printf("%d-%d\n", date->year, date->month);
+//     return 0;
+// }
+
+//----------------------------------------------------//
+
+// 单链表 =.=没懂
+// struct Book
+// {
+//     char title[128];
+//     char author[40];
+//     struct Book *next;
+// };
+
+// void getInput(struct Book *book)
+// {
+//     printf("请输入书名:");
+//     scanf("%s",book->title);
+//     printf("请输入作者:");
+//     scanf("%s",book->author);
+// }
+
+// void addBook(struct Book **library)
+// {
+//     struct Book *book, *temp;
+//     book = (struct Book *)malloc(sizeof(struct Book));
+//     if (book == NULL)
+//     {
+//         printf("内存分配失败\n");
+//         exit(1);
+//     }
+//     getInput(book);
+
+//     if (*library != NULL)
+//     {
+//         temp = *library;
+//         *library = book;
+//         book->next = NULL;
+//     }
 //     else
-//         printf("str1 and str2 are not  the same\n");
-//     if (str3 == str4)
-//         printf("str3 and str4 are the same\n");
-//     else 
-//         printf("str1 and str2 are not the same\n");
+//     {
+//         *library = book;
+//     }
+// }
+
+// int main()
+// {
+//     struct Book *library = NULL;
+//     addBook(&library);
 //     return 0;
 // }
 
-//-----------------------------------------------------------------------//
+//----------------------------------------------------//
+// 内存池 -> 使用单链表
 
-// 指针数组 -> 本质是数组，数组中存放的元素是指针(地址) -> int/char/...* p[]
+//----------------------------------------------------//
 
-// demo(1) -> 示例
+// typedef -> 定义别名
+
+// demo(8)
+// typedef int integer;
 // int main()
 // {
-//     int* arr[4]; // 存放的元素是整型指针的数组 -> [int* int* int* int*]
+//     integer a;
+//     int b;
+
+//     a = 520;
+//     b = a;
+//     printf("a = %d\n", a);
+//     printf("b = %d\n", b);
+//     printf("size of a = %d\n", sizeof(a));
 //     return 0;
-// } 
+// }
 
-// demo(2) -> 应用
+// (见csdn)
+
+//----------------------------------------------------//
+
+// 共用体(union) -> 共享一个内存地址 -> 内存占比最大为成员中最大尺寸
+// demo(9)
+// union Test
+// {
+//     int i;
+//     double pi;
+// };
 // int main()
 // {
-//     int a[] = {1,2,3,4,5}; // 数组的本质也是存储的其首字符地址
-//     int b[] = {2,3,4,5,6};
-//     int c[] = {3,4,5,6,7};
-//     int* arr[3] = {a,b,c}; // 存放每个数组的第一个元素的地址
+//     union Test test;
+//     test.i = 520;
+//     test.pi = 3.14;
+//     printf("addr of test.i is:%p\n", &test.i);
+//     printf("addr of test.pi is:%p\n", &test.pi);
+//     return 0;
+// }
 
-//     int i = 0;
-//     int j = 0;
-//     for (i = 0;i < 3; i++)
+//----------------------------------------------------//
+
+// 枚举(enum) -> enum 枚举类型名称 枚举变量1,枚举变量2
+// demo(10)
+// int main()
+// {
+//     enum Color {red = 10, green, blue};
+//     enum Color rgb;
+//     for (rgb = red; rgb <= blue; rgb++)
 //     {
-//         for (j = 0;j < 5; j++)
-//         {
-//             printf("%d", arr[i][j]);
-//         }
-//         printf("\n");
+//         printf("rgb is %d\n", rgb);
 //     }
 //     return 0;
 // }
 
 
-//-----------------------------------------------------------------------//
+//----------------------------------------------------//
 
-// 数组指针 -> 指向数组的指针 -> 存放的是数组的地址 -> int/char/... (*p)[]
-
-// demo(1) -> 示例
+// 位域 -> 在定义结构体时，在结构体成员后面使用冒号(:)和数字表示该成员所占的位数
+// demo(11)
 // int main()
 // {
-//     int arr[10] = {1,2,3,4,5};
-//     // parr就是一个数组指针 -> (*)说明是一个指针 、 []说明指向的是数组 、 int说明数组元素为整型
-//     int (*parr)[10] = &arr; // &arr取出的是整个数组的地址 <-> arr取出的是数组的第一个元素的地址
-
-//     return 0;
-// }
-
-// demo(2) -> &arr 与 arr区别
-// int main()
-// {
-//     int arr[10] = {0};
-
-//     int* p1 = arr; // p1 指向 arr 数组的第一个元素的地址
-//     int (*p2)[10] = &arr; // p2 指向 arr 整个数组的地址
-//     printf("%p\n", p1);
-//     printf("%p\n", p1 + 1); // p1 向后跳过4个字节
-
-//     printf("%p\n", p2);
-//     printf("%p\n", p2 + 1); // p2 向后跳过40个字节
-//     return 0;
-// }
-
-// demo(3) -> 数组指针的访问
-// 一维数组
-// int main()
-// {
-//     int arr[10] = {1,2,3,4,5,6,7,8,9};
-//     int (*pa)[10] = &arr; // pa 存入的是整个数组的地址
-//     int i = 0;
-//     for (i = 0; i < 10; i++)
+//     struct Test
 //     {
-//         printf("%d ", *((*pa)+i)); // *pa 相当于解引用整个数组得到数组首元素地址 
-//     }
+//         unsigned int a:1;
+//         unsigned int b:1;
+//         unsigned int c:2;
+//     };
+//     struct Test test;
+//     test.a = 0;
+//     test.b = 1;
+//     test.c = 2;
+//     printf("a = %d, b = %d, c = %d\n",test.a, test.b, test.c);
+//     printf("size of test = %p\n", sizeof(test));
 //     return 0;
 // }
 
-// 二维数组
-// void print(int (*p)[5] , int r , int c)
+//----------------------------------------------------//
+
+// #include <stdio.h>
+// int ADD(int arr[], int sz);
+// int main()
+// {
+//     int arr[] = {1,2,3,4,5,6,7,8,9};
+//     int size = sizeof(arr) / sizeof(arr[0]);
+//     printf("各元素之和为:%d\n", ADD(arr,size));
+//     return 0;
+// }
+// int ADD(int arr[], int sz)
 // {
 //     int i = 0;
-//     int j = 0;
-//     for (i = 0;i < r; i++)
+//     int sum = 0;
+//     for (i = 0; i <= sz; i++)
 //     {
-//         for (j = 0;j < c;j++)
-//         {
-//             printf("%d ", *(*(p+i))+j); // p + i得到第 i 行的首元素地址 ， 解引用后得到每行首元素地址 ， *(p+i)+j 得到第 j 列的元素地址 ， 再解引用获得值
-//         }
-//         printf("\n");
+//         sum += arr[i];
 //     }
+//     return sum;
 // }
-// int main()
-// {
-//     int arr[3][5] = {{1,2,3,4,5},{2,3,4,5,6},{3,4,5,6,7}};
-//     print(arr,3,5); // 传入的 arr 相当于传入的是首元素地址(相当于第一行的地址 <- 是一维数组的地址)
-//     return 0;
-// }
-
-// demo(3)
-// int (*parr[10])[5] -> parr是一个能存储10个数组指针的数组，每个数组指针指向一个数组，数组5个元素，每个元素是int类型
